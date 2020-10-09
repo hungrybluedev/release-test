@@ -1,4 +1,4 @@
-name: Create Release Builds
+name: Create builds for major platforms and upload release assets
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Create cross-platform release build, tag and upload binaries
+    name: Create release builds for Ubuntu and MacOS
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -26,7 +26,9 @@ jobs:
           cmakeListsOrSettingsJson: "CMakeListsTxtBasic"
           cmakeBuildType: Release
           buildDirectory: "${{ github.workspace }}/${{ matrix.os }}"
-
+  create_upload_release:
+    needs: build
+    steps:
       - name: Create a release
         id: create_release
         uses: actions/create-release@v1
@@ -37,14 +39,33 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: true
           prerelease: true
-
-      - name: Upload Release Asset
-        id: upload-release-asset
+      - name: Upload release Ubuntu release asset
+        id: upload_ubuntu_asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}#passing-data-to-future-steps
-          asset_path: ${{ github.workspace }}/${{ matrix.os }}/xtest
-          asset_name: xtest-${{ matrix.os }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/ubuntu-latest/xtest
+          asset_name: xtest-ubuntu-latest
+          asset_content_type: application/octet-stream
+      - name: Upload release MacOS release asset
+        id: upload_macos_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/macos-latest/xtest
+          asset_name: xtest-macos-latest
+          asset_content_type: application/octet-stream
+      - name: Upload release Windows release asset
+        id: upload_windows_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/windows-latest/xtest.exe
+          asset_name: xtest-windows-latest.exe
           asset_content_type: application/octet-stream
