@@ -1,0 +1,47 @@
+name: Create builds for major platforms and upload release assets
+
+on:
+  push:
+    tags:
+      - "v*" # matches v1.0.1, v1.2, v2, etc
+
+jobs:
+  build:
+    name: Create release build for Windows, create release and upload assets
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+  
+      - name: Install latest CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Run CMake (generation and build)
+        uses: lukka/run-cmake@v2
+        with:
+          cmakeListsOrSettingsJson: "CMakeListsTxtBasic"
+          cmakeBuildType: Release
+          buildDirectory: "${{ github.workspace }}/Release"
+  
+      - name: Create a release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}-windows
+          release_name: Windows Asset Release ${{ github.ref }}
+          draft: true
+          prerelease: true
+  
+      - name: Upload release Windows release asset
+        id: upload_windows_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/Release/xtest.exe
+          asset_name: xtest-windows-latest.exe
+          asset_content_type: application/octet-stream
