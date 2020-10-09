@@ -28,6 +28,7 @@ jobs:
           buildDirectory: "${{ github.workspace }}/${{ matrix.os }}"
   create_upload_release:
     needs: build
+    runs-on: ubuntu-latest
     steps:
       - name: Create a release
         id: create_release
