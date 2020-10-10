@@ -61,5 +61,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/Release/xtest
-          asset_name: xtest-${{ matrix.os }}-latest
+          asset_name: xtest-${{ matrix.os }}
           asset_content_type: application/octet-stream
