@@ -40,7 +40,7 @@ jobs:
 
       - name: Upload release Windows release asset
         if: |
-          equals(matrix.os, 'windows-latest')
+          contains(matrix.os, 'windows-latest')
         id: upload_windows_asset
         uses: actions/upload-release-asset@v1
         env:
