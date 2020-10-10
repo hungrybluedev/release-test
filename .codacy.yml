@@ -1,0 +1,4 @@
+---
+exclude_paths:
+  - test/include/external/munit/munit.h
+  - test/src/external/munit/munit.c
