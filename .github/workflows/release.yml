@@ -1,4 +1,4 @@
-name: Create builds for major platforms and upload release assets
+name: CI for release tags
 
 on:
   push:
@@ -49,4 +49,17 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/Release/xtest.exe
           asset_name: xtest-windows-latest.exe
+          asset_content_type: application/octet-stream
+
+      - name: Upload release Ubuntu and MacOS release asset
+        if: |
+          !contains(matrix.os, 'windows-latest')
+        id: upload_unix_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/Release/xtest
+          asset_name: xtest-${{ matrix.os }}-latest
           asset_content_type: application/octet-stream
