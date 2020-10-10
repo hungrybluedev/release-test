@@ -1,4 +1,4 @@
-name: Cross-platform CMake Builds
+name: Main CI test
 
 on: [push, pull_request]
 
