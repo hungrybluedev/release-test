@@ -19,8 +19,6 @@ This project is based off my previous one: [Template for CMake based C Projects]
 
 The goal of this experiment/template is to make an accessible starting point for creating cross-platform builds for CMake-based C projects. Additionally, it uploads the binaries built and adds them to the release.
 
-I faced a few roadblocks and along the way and some issues remained unresolved. One of them was that you cannot upload several assets to the same release. So I create several releases from different operating systems and mark them as drafts. Then I download the separate binaries and
-
 ## Commands
 
 To generate the build files:
@@ -57,11 +55,11 @@ This is the main highlight for this repository. The `main.yml` file is the same 
 
 A simplified explanation of the algorithm is as follows:
 
-1. Use a matrix of OSes so that the same "script" can be run on all the target platforms.
-2. Checkout the code from the repository.
-3. Download (from the internet, or cache) and install CMake.
-4. Run CMake using the `Release` configuration.
-5. Create a Github release.
+1. Create a Github release.
+2. Use a matrix of OSes so that the same "script" can be run on all the target platforms.
+3. Checkout the code from the repository.
+4. Download (from the internet, or cache) and install CMake.
+5. Run CMake using the `Release` configuration.
 6. Upload the binary from that particular OS to the newly created release.
 
 There is a conditional statement to account for the `.exe` extension for the Windows build. Also, the build triggers only on tags that are prefixed with `v` (for example, strings like `v2`, `v0.3`, `v1.0.23` will all match). This can be changed easily.
@@ -76,19 +74,10 @@ There is a conditional statement to account for the `.exe` extension for the Win
 6. Inclusion of suggested badges for the project's README.
 7. Creation of draft releases with multi-platform release builds available for download. (Requires some manual intervention.)
 
-## Problems
-
-The release action config does not create a single release. It creates 3 different draft releases. The maintainer can download these assets, rename them, sign them if needed, then re-upload to a final non-draft release, complete with all instructions, changelog, hash values, etc.
-
-I realise that this is a bit of an inconvenience but it is still amazing that you can build release assets for all three major OSes that is, Windows, Linux, and MacOS without having to depend on local installations of these.
-
-If you know how to create only one release and upload all three release assets to that single release, [let me know](https://hungrybluedev.in/contact/) or create an "issue - pull request" pair!
-
 ## Acknowledgement
 
-Big thanks to lukka for the [get-cmake](https://github.com/marketplace/actions/get-cmake) and [run-cmake](https://github.com/marketplace/actions/run-cmake) Github actions!
-
-There was a slight issue in get-cmake which was causing the MacOS builds to fail. So I [reported it](https://github.com/lukka/get-cmake/issues/14) and Lukka responded, worked on it and it was fixed within a day!
+1. Big thanks to lukka for the [get-cmake](https://github.com/marketplace/actions/get-cmake) and [run-cmake](https://github.com/marketplace/actions/run-cmake) Github actions! There was a slight issue in get-cmake which was causing the MacOS builds to fail. So I [reported it](https://github.com/lukka/get-cmake/issues/14) and Lukka responded, worked on it and it was fixed within a day!
+2. Simran-B for helping me fix the single release-multiple upload issue on [Github Community](https://github.community/t/how-to-upload-release-assets-from-multiple-oses-into-one-release/136815).
 
 ## Support me
 
@@ -96,3 +85,15 @@ If you think my work has helped you, please consider supporting me on Ko-fi or P
 
 [<img style="height: 36px;" height="36" src="https://raw.githubusercontent.com/hungrybluedev/hungrybluedev/master/kofi.webp">](https://ko-fi.com/hungrybluedev)
 [<img style="height: 36px;" height="36"  src="https://raw.githubusercontent.com/hungrybluedev/hungrybluedev/master/patreon.webp">](https://www.patreon.com/hungrybluedev)
+
+## Changelog
+
+### latest
+
+- Create only one release per tag
+
+### v0.1.0
+
+- First public release
+- All 3 OS build pipelines are operational.
+- Instructions for building from source and using pre-built binaries are included.
