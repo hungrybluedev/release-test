@@ -19,6 +19,14 @@ This project is based off my previous one: [Template for CMake based C Projects]
 
 The goal of this experiment/template is to make an accessible starting point for creating cross-platform builds for CMake-based C projects. Additionally, it uploads the binaries built and adds them to the release.
 
+## Using This Template
+
+### Creating A New Project
+
+The recommended way is to download the source code and extact into the desired folder. Then change the names of the folders, the values in the config files, etc.
+
+To obtain the source code for the latest release, go to the [Releases](https://github.com/hungrybluedev/release-test/releases) page and download the Source Code archive (ZIP or tar.gz). Alternatively, to get the latest source, you can download the ZIP from the main page of the repository. Click on **Code** | **Download ZIP**.
+
 ## Commands
 
 To generate the build files:
@@ -91,6 +99,8 @@ If you think my work has helped you, please consider supporting me on Ko-fi or P
 ### latest
 
 - Create only one release per tag
+- Releases are all named minimally (`xtest` on \*nix systems and `xtest.exe` on Windows).
+- To separate them releases, they are zipped into canonically named ZIP archives.
 
 ### v0.1.0
 
