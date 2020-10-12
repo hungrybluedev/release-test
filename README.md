@@ -96,11 +96,13 @@ If you think my work has helped you, please consider supporting me on Ko-fi or P
 
 ## Changelog
 
-### latest
+### v0.2.0
 
 - Create only one release per tag
 - Releases are all named minimally (`xtest` on \*nix systems and `xtest.exe` on Windows).
 - To separate them releases, they are zipped into canonically named ZIP archives.
+- Include appropriate `.gitignore` entries for Visual Studio and CLion.
+- Add `.clang-format` for consistent formatting across IDEs.
 
 ### v0.1.0
 
